@@ -1,25 +1,26 @@
 const express = require ('express')
-const db = require("./src/database/connection");
+const dotenv = require("dotenv");
+const connection = require("./src/database/connection");
 
-const app = express()
+dotenv.config();
+const app = express();
 
-app.use(express.json())
+// Middleware para JSON
+app.use(express.json());
+
+// Conexión a MongoDB
+connection();
 
 app.get('/', (req,res) => {
     res.send('server running');
 })
 
-// Ruta para verificar conexión a la base de datos
-app.get("/db-status", (req, res) => {
-    if (db.state === "connected") {
-        res.send("✅ Conexión a la base de datos exitosa! 🚀");
-    } else {
-        res.status(500).send("❌ Error en la conexión a la base de datos");
-    }
-});
-
-const PORT = process.env.PORT || 8080;
+// Puerto del servidor
+const PORT = process.env.DB_PORT || 8080;
 
 app.listen(PORT, () => {
-    console.log("server running in", PORT)
+    console.log("server running in ", PORT)
 })
+
+const adminRoutes = require("./src/routes/adminRoutes");
+app.use("/admins", adminRoutes);
