@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const turnosSchema = new mongoose.Schema({
+const turnoSchema = new mongoose.Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, //id unico
-  profesionalId: { type: mongoose.Schema.Types.ObjectId, required: true },
   nombrePaciente: { type: String, required: true },
   apellidoPaciente: { type: String, required: true },
   telefonoPaciente: { type: String, required: true },
+  descripcion: { type: String },
   // Relación con Admin
   adminId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,4 +21,5 @@ const turnosSchema = new mongoose.Schema({
   fechaTurno: { type: Date, required: true },
 });
 
-module.exports = mongoose.model("Turnos", turnosSchema);
+module.exports = mongoose.model("Turno", turnoSchema);
+
