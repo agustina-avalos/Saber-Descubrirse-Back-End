@@ -1,6 +1,8 @@
 const express = require ('express')
 const dotenv = require("dotenv");
 const connection = require("./src/database/connection");
+const adminRoutes = require("./src/routes/adminRoutes");
+const turnosRoutes = require("./src/routes/turnosRoutes");
 
 dotenv.config();
 const app = express();
@@ -22,5 +24,6 @@ app.listen(PORT, () => {
     console.log("server running in ", PORT)
 })
 
-const adminRoutes = require("./src/routes/adminRoutes");
+
 app.use("/admins", adminRoutes);
+app.use("/turnos", turnosRoutes);

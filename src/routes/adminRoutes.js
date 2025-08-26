@@ -23,4 +23,37 @@ router.get("/", async (req, res) => {
     }
 });
 
+// Obtener un admin por ID
+router.get("/:id", async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    if (!admin) return res.status(404).json({ error: "Admin no encontrado" });
+    res.json(admin);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Actualizar admin por ID
+router.patch("/:id", async (req, res) => {
+  try {
+    const admin = await Admin.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true, runValidators: true  });
+    if (!admin) return res.status(404).json({ error: "Admin no encontrado" });
+    res.json(admin);
+    } catch (err) {
+    res.status(400).json({ error: err.message });
+    }
+});
+
+// Eliminar un admin
+router.delete("/:id", async (req, res) => {
+  try {
+    const admin = await Admin.findByIdAndDelete(req.params.id);
+    if (!admin) return res.status(404).json({ error: "Admin no encontrado" });
+    res.json({ message: "Admin eliminado correctamente" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
