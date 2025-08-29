@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const connection = require("./src/database/connection");
 const adminRoutes = require("./src/routes/adminRoutes");
 const turnosRoutes = require("./src/routes/turnosRoutes");
+const carruselRoutes = require("./src/routes/carruselRoutes");
 
 dotenv.config();
 const app = express();
@@ -27,3 +28,4 @@ app.listen(PORT, () => {
 
 app.use("/admins", adminRoutes);
 app.use("/turnos", turnosRoutes);
+app.use("/carrusel", carruselRoutes);
