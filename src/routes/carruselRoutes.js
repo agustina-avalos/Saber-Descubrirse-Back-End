@@ -1,5 +1,4 @@
 const express = require('express');
-const Carrusel = require('../models/Carrusel');
 const router = express.Router();
 const { postImage, getImages, updateImage, deleteImage } = require('../controllers/carruselControllers');
 const { validateCarrusel } = require('../validators/carruselValidator');
