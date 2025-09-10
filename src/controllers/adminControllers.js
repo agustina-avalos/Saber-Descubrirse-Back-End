@@ -5,30 +5,59 @@ const createAdmin = async (req, res) => {
     try {
         const admin = new Admin(req.body);
         await admin.save();
-        res.status(201).json(admin);
+        
+        // Respuesta sin contraseña por seguridad
+        const adminResponse = admin.toObject();
+        delete adminResponse.password;
+        
+        res.status(201).json({
+            success: true,
+            message: 'Administrador creado exitosamente',
+            data: adminResponse
+        });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ 
+            success: false,
+            error: error.message 
+        });
     }
 };
 
 //Listar admins
 const getAdmins = async (req, res) => {
     try {
-        const admins = await Admin.find();
-        res.json(admins);
+        const admins = await Admin.find().select('-password');
+        res.json({
+            success: true,
+            message: 'Administradores obtenidos exitosamente',
+            data: admins
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ 
+            success: false,
+            error: error.message 
+        });
     }
 };
 
 //Obtener un admin por ID
 const getAdminById = async (req, res) => {
   try {
-    const admin = await Admin.findById(req.params.id);
-    if (!admin) return res.status(404).json({ error: "Admin no encontrado" });
-    res.json(admin);
+    const admin = await Admin.findById(req.params.id).select('-password');
+    if (!admin) return res.status(404).json({ 
+      success: false,
+      error: "Admin no encontrado" 
+    });
+    res.json({
+      success: true,
+      message: 'Administrador obtenido exitosamente',
+      data: admin
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ 
+      success: false,
+      error: err.message 
+    });
   }
 };
 
