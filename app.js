@@ -1,9 +1,11 @@
 const express = require ('express')
+const cors = require('cors');
 const dotenv = require("dotenv");
 const connection = require("./src/database/connection");
 dotenv.config();
 const app = express();
 
+const authRoutes = require("./src/routes/authRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
 const turnosRoutes = require("./src/routes/turnosRoutes");
 const carruselRoutes = require("./src/routes/carruselRoutes");
@@ -11,6 +13,8 @@ const contenidoPaginaRoutes = require("./src/routes/contenidoPaginaRoutes");
 const experienciaRoutes = require("./src/routes/experienciaRoutes");
 const suscriptorRoutes = require("./src/routes/suscriptorRoutes");
 
+// Middleware para CORS
+app.use(cors());
 
 // Middleware para JSON
 app.use(express.json());
@@ -30,6 +34,7 @@ app.listen(PORT, () => {
 })
 
 
+app.use("/auth", authRoutes);
 app.use("/admins", adminRoutes);
 app.use("/turnos", turnosRoutes);
 app.use("/carrusel", carruselRoutes);
